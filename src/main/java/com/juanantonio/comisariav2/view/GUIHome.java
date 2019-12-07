@@ -5,17 +5,20 @@
  */
 package com.juanantonio.comisariav2.view;
 
+import com.juanantonio.comisariav2.controller.CtrlGUIHome;
+
 /**
  *
  * @author Juan Antonio
  */
 public class GUIHome extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GUIHome
-     */
+    CtrlGUIHome controller;
+
     public GUIHome() {
         initComponents();
+        controller = new CtrlGUIHome(this);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -33,6 +36,10 @@ public class GUIHome extends javax.swing.JFrame {
         deleteSuspectButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableSuspects = new javax.swing.JTable();
+        reloadButton = new javax.swing.JButton();
+        searchTextField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        searchButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,9 +47,9 @@ public class GUIHome extends javax.swing.JFrame {
         title.setForeground(new java.awt.Color(255, 0, 51));
         title.setText("ComisaríaV2");
 
-        addSuspectButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/juanantonio/comisariav2/view/icons/addIcon.png"))); // NOI18N
+        addSuspectButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/addIcon.png"))); // NOI18N
 
-        deleteSuspectButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/juanantonio/comisariav2/view/icons/deleteIcon.png"))); // NOI18N
+        deleteSuspectButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/deleteIcon.png"))); // NOI18N
 
         tableSuspects.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -57,6 +64,13 @@ public class GUIHome extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tableSuspects);
 
+        reloadButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/refreshIcon.png"))); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Buscar:");
+
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/searchIcon.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -68,13 +82,22 @@ public class GUIHome extends javax.swing.JFrame {
                         .addComponent(title)
                         .addGap(316, 316, 316))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(addSuspectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(deleteSuspectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(141, 141, 141))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(134, 134, 134)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addSuspectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(deleteSuspectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(reloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(93, 93, 93))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,11 +106,21 @@ public class GUIHome extends javax.swing.JFrame {
                 .addComponent(title)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addSuspectButton)
-                    .addComponent(deleteSuspectButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addSuspectButton)
+                            .addComponent(deleteSuspectButton)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(187, 187, 187))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(reloadButton)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -98,7 +131,7 @@ public class GUIHome extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -142,8 +175,12 @@ public class GUIHome extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton addSuspectButton;
     public javax.swing.JButton deleteSuspectButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JButton reloadButton;
+    public javax.swing.JButton searchButton;
+    public javax.swing.JTextField searchTextField;
     public javax.swing.JTable tableSuspects;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables

@@ -138,5 +138,20 @@ public class CtrlGUIAddSuspect implements ActionListener {
             s.setResidencies(r);
         }
         suspectDao.insert(s);
+        clean();
+        gui.setVisible(false);
+    }
+    
+    private void clean(){
+        gui.nameTextField.setText(null);
+        gui.surname1TextField.setText(null);
+        gui.surname2TextField.setText(null);
+        gui.dniTextField.setText(null);
+        gui.recordsTextArea.setText(null);
+        gui.factsTextArea.setText(null);
+        gui.emailsList.removeAll();
+        gui.phoneNumbersList.removeAll();
+        gui.residenciesList.removeAll();
+        gui.licensePlatesList.removeAll();
     }
 }
