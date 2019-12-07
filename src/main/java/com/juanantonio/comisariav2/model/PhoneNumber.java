@@ -1,32 +1,40 @@
-
 package com.juanantonio.comisariav2.model;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Juan Antonio
  */
-public class PhoneNumber implements Serializable{
-    private final static long serialVersionUID = 1L;
-    @Id
-    @Column(name="id")
-    private long id;
-    @Column(name="id_suspect")
-    private long id_suspect;
-    @Column(name="phone_number")
-    private String phoneNumber;
+@Entity
+@Table(name = "PHONE_NUMBERS")
+public class PhoneNumber implements Serializable {
 
-    public PhoneNumber(long id, long id_suspect, String licensePlate) {
-        this.id = id;
-        this.id_suspect = id_suspect;
-        this.phoneNumber = licensePlate;
-    }
+    @Id
+    @Column(name = "id")
+    private long id;
+    @Column(name = "phone_number")
+    private String phoneNumber;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "suspect_id")
+    private Suspect suspect;
 
     public PhoneNumber() {
     }
+
+    public PhoneNumber(long id, String phoneNumber, Suspect suspect) {
+        this.id = id;
+        this.phoneNumber = phoneNumber;
+        this.suspect = suspect;
+    }
+    
 
     public long getId() {
         return id;
@@ -36,19 +44,19 @@ public class PhoneNumber implements Serializable{
         this.id = id;
     }
 
-    public long getId_suspect() {
-        return id_suspect;
-    }
-
-    public void setId_suspect(long id_suspect) {
-        this.id_suspect = id_suspect;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Suspect getSuspect() {
+        return suspect;
+    }
+
+    public void setSuspect(Suspect suspect) {
+        this.suspect = suspect;
     }
 }

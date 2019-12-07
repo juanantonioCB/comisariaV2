@@ -1,29 +1,37 @@
-
 package com.juanantonio.comisariav2.model;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Juan Antonio
  */
-public class LicensePlate implements Serializable{
-    private final static long serialVersionUID = 1L;
-    @Id
-    @Column(name="id")
-    private long id;
-    @Column(name="id_suspect")
-    private long id_suspect;
-    @Column(name="license_plate")
-    private String licensePlate;
+@Entity
+@Table(name = "LICENSE_PLATES")
+public class LicensePlate implements Serializable {
 
-    public LicensePlate(long id, long id_suspect, String licensePlate) {
+    @Id
+    @Column(name = "id")
+    private long id;
+    @Column(name = "license_plate")
+    private String licensePlate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "suspect_id")
+    private Suspect suspect;
+
+    public LicensePlate(long id, String licensePlate, Suspect suspect) {
         this.id = id;
-        this.id_suspect = id_suspect;
         this.licensePlate = licensePlate;
+        this.suspect = suspect;
     }
+
 
     public LicensePlate() {
     }
@@ -36,19 +44,19 @@ public class LicensePlate implements Serializable{
         this.id = id;
     }
 
-    public long getId_suspect() {
-        return id_suspect;
-    }
-
-    public void setId_suspect(long id_suspect) {
-        this.id_suspect = id_suspect;
-    }
-
     public String getLicensePlate() {
         return licensePlate;
     }
 
     public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
+    }
+
+    public Suspect getSuspect() {
+        return suspect;
+    }
+
+    public void setSuspect(Suspect suspect) {
+        this.suspect = suspect;
     }
 }

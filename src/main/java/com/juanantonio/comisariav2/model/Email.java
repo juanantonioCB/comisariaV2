@@ -1,28 +1,35 @@
-
 package com.juanantonio.comisariav2.model;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Juan Antonio
  */
-public class Email implements Serializable{
-    private final static long serialVersionUID = 1L;
-    @Id
-    @Column(name="id")
-    private long id;
-    @Column(name="id_suspect")
-    private long id_suspect;
-    @Column(name="email")
-    private String email;
+@Entity
+@Table(name = "EMAILS")
+public class Email implements Serializable {
 
-    public Email(long id, long id_suspect, String email) {
+    @Id
+    @Column(name = "id")
+    private long id;
+    @Column(name = "email")
+    private String email;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "suspect_id")
+    private Suspect suspect;
+
+    public Email(long id, String email, Suspect suspect) {
         this.id = id;
-        this.id_suspect = id_suspect;
         this.email = email;
+        this.suspect = suspect;
     }
 
     public Email() {
@@ -36,14 +43,6 @@ public class Email implements Serializable{
         this.id = id;
     }
 
-    public long getId_suspect() {
-        return id_suspect;
-    }
-
-    public void setId_suspect(long id_suspect) {
-        this.id_suspect = id_suspect;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -52,5 +51,12 @@ public class Email implements Serializable{
         this.email = email;
     }
 
+    public Suspect getSuspect() {
+        return suspect;
+    }
+
+    public void setSuspect(Suspect suspect) {
+        this.suspect = suspect;
+    }
 
 }

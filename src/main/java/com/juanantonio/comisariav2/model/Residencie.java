@@ -1,31 +1,39 @@
-
 package com.juanantonio.comisariav2.model;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Juan Antonio
  */
-public class Residencie implements Serializable{
-    private final static long serialVersionUID = 1L;
-    @Id
-    @Column(name="id")
-    private long id;
-    @Column(name="id_suspect")
-    private long id_suspect;
-    @Column(name="residencie")
-    private String residencie;
+@Entity
+@Table(name = "RESIDENCIES")
+public class Residencie implements Serializable {
 
-    public Residencie(long id, long id_suspect, String licensePlate) {
-        this.id = id;
-        this.id_suspect = id_suspect;
-        this.residencie = licensePlate;
-    }
+ 
+    @Id
+    @Column(name = "id")
+    private long id;
+    @Column(name = "residencie")
+    private String residencie;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "suspect_id")
+    private Suspect suspect;
 
     public Residencie() {
+    }
+
+    public Residencie(long id, String residencie, Suspect suspect) {
+        this.id = id;
+        this.residencie = residencie;
+        this.suspect = suspect;
     }
 
     public long getId() {
@@ -36,21 +44,25 @@ public class Residencie implements Serializable{
         this.id = id;
     }
 
-    public long getId_suspect() {
-        return id_suspect;
-    }
-
-    public void setId_suspect(long id_suspect) {
-        this.id_suspect = id_suspect;
-    }
-
     public String getResidencie() {
         return residencie;
+    }
+
+    @Override
+    public String toString() {
+        return "Residencie{" + "id=" + id + ", residencie=" + residencie;
     }
 
     public void setResidencie(String residencie) {
         this.residencie = residencie;
     }
 
+    public Suspect getSuspect() {
+        return suspect;
+    }
+
+    public void setSuspect(Suspect suspect) {
+        this.suspect = suspect;
+    }
 
 }
