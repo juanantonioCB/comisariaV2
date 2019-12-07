@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,6 +21,7 @@ public class PhoneNumber implements Serializable {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -29,12 +32,10 @@ public class PhoneNumber implements Serializable {
     public PhoneNumber() {
     }
 
-    public PhoneNumber(long id, String phoneNumber, Suspect suspect) {
-        this.id = id;
+    public PhoneNumber(String phoneNumber, Suspect suspect) {
         this.phoneNumber = phoneNumber;
         this.suspect = suspect;
     }
-    
 
     public long getId() {
         return id;

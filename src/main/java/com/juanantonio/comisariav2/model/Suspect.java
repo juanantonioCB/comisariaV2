@@ -23,7 +23,7 @@ public class Suspect implements Serializable {
     private final static long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name")
     private String name;
@@ -39,6 +39,12 @@ public class Suspect implements Serializable {
     private String facts;
     @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Residencie> residencies = new ArrayList<>();
+    @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<PhoneNumber> phoneNumbers = new ArrayList<>();
+    @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<LicensePlate> licensePlates = new ArrayList<>();
+    @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Email> emails = new ArrayList<>();
 
     public Suspect() {
 
@@ -46,6 +52,15 @@ public class Suspect implements Serializable {
 
     public Suspect(Long id, String name, String surname1, String surname2, String dni, String records, String facts) {
         this.id = id;
+        this.name = name;
+        this.surname1 = surname1;
+        this.surname2 = surname2;
+        this.dni = dni;
+        this.records = records;
+        this.facts = facts;
+    }
+    
+    public Suspect(String name, String surname1, String surname2, String dni, String records, String facts) {
         this.name = name;
         this.surname1 = surname1;
         this.surname2 = surname2;
@@ -115,7 +130,7 @@ public class Suspect implements Serializable {
 
     @Override
     public String toString() {
-        return "Suspect{" + "id=" + id + ", name=" + name + ", surname1=" + surname1 + ", surname2=" + surname2 + ", dni=" + dni + ", records=" + records + ", facts=" + facts + ", residencies=" ;
+        return "Suspect{" + "id=" + getId() + ", name=" + getName() + ", surname1=" + getSurname1() + ", surname2=" + getSurname2() + ", dni=" + getDni() + ", records=" + getRecords() + ", facts=" + getFacts() + ", residencies=" ;
     }
 
  
@@ -138,5 +153,29 @@ public class Suspect implements Serializable {
 
     public void setResidencies(List<Residencie> residencies) {
         this.residencies = residencies;
+    }
+
+    public List<PhoneNumber> getPhoneNumbers() {
+        return phoneNumbers;
+    }
+
+    public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
+    }
+
+    public List<LicensePlate> getLicensePlates() {
+        return licensePlates;
+    }
+
+    public void setLicensePlates(List<LicensePlate> licensePlates) {
+        this.licensePlates = licensePlates;
+    }
+
+    public List<Email> getEmails() {
+        return emails;
+    }
+
+    public void setEmails(List<Email> emails) {
+        this.emails = emails;
     }
 }

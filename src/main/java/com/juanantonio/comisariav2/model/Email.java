@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,6 +21,7 @@ public class Email implements Serializable {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "email")
     private String email;
@@ -26,8 +29,7 @@ public class Email implements Serializable {
     @JoinColumn(name = "suspect_id")
     private Suspect suspect;
 
-    public Email(long id, String email, Suspect suspect) {
-        this.id = id;
+    public Email(String email, Suspect suspect) {
         this.email = email;
         this.suspect = suspect;
     }

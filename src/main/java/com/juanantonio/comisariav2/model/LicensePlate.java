@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,6 +21,7 @@ public class LicensePlate implements Serializable {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "license_plate")
     private String licensePlate;
@@ -26,8 +29,7 @@ public class LicensePlate implements Serializable {
     @JoinColumn(name = "suspect_id")
     private Suspect suspect;
 
-    public LicensePlate(long id, String licensePlate, Suspect suspect) {
-        this.id = id;
+    public LicensePlate(String licensePlate, Suspect suspect) {
         this.licensePlate = licensePlate;
         this.suspect = suspect;
     }

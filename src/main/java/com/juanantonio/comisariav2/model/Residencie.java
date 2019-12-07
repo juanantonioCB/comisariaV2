@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,6 +22,7 @@ public class Residencie implements Serializable {
  
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "residencie")
     private String residencie;
@@ -34,6 +37,15 @@ public class Residencie implements Serializable {
         this.id = id;
         this.residencie = residencie;
         this.suspect = suspect;
+    }
+    
+    public Residencie(String residencie, Suspect suspect) {
+        this.residencie = residencie;
+        this.suspect = suspect;
+    }
+
+    public Residencie(int i, String elementAt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public long getId() {
