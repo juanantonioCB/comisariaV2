@@ -6,6 +6,7 @@ import com.juanantonio.comisariav2.view.GUIAddSuspect;
 import com.juanantonio.comisariav2.view.GUIHome;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,12 +28,24 @@ public class CtrlGUIHome implements ActionListener {
         gui.reloadButton.addActionListener(this);
         gui.searchButton.addActionListener(this);
         gui.searchTextField.addActionListener(this);
+        gui.test.addActionListener(this);
+        gui.test2.addActionListener(this);
         suspectDao = new SuspectDAO();
         loadTable();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == gui.test) {
+            
+            System.out.println(suspectDao.getSuspects().get(1).getCompanions());
+        }
+        if(e.getSource()==gui.test2){
+            System.out.println("antes "+suspectDao.getSuspects().get(1).getCompanions());
+            suspectDao.getSuspects().get(1).getCompanions().remove(0);
+            System.out.println("despues "+suspectDao.getSuspects().get(1).getCompanions());
+           
+        }
         if (e.getSource() == gui.searchTextField) {
             loadTableSearch(gui.searchTextField.getText());
         }

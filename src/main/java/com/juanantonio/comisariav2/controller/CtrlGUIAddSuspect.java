@@ -25,6 +25,8 @@ public class CtrlGUIAddSuspect implements ActionListener {
     DefaultListModel<String> modelEmails = new DefaultListModel<>();
     DefaultListModel<String> modelLicensePlates = new DefaultListModel<>();
     DefaultListModel<String> modelPhoneNumbers = new DefaultListModel<>();
+    DefaultListModel companionsModel = new DefaultListModel();
+    DefaultListModel companionsAddModel = new DefaultListModel();
 
     public CtrlGUIAddSuspect(GUIAddSuspect gui) {
         this.gui = gui;
@@ -38,15 +40,29 @@ public class CtrlGUIAddSuspect implements ActionListener {
         gui.deletePhoneNumberButton.addActionListener(this);
         gui.deleteResidencieButton.addActionListener(this);
         gui.saveSuspectButton.addActionListener(this);
+        gui.addCompanionButton.addActionListener(this);
+        gui.reloadCompanionsButton.addActionListener(this);
 
         gui.residenciesList.setModel(modelResidencies);
         gui.emailsList.setModel(modelEmails);
         gui.phoneNumbersList.setModel(modelPhoneNumbers);
         gui.licensePlatesList.setModel(modelLicensePlates);
+        gui.companionsList.setModel(companionsModel);
+        gui.companionsAddList.setModel(companionsAddModel);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == gui.reloadCompanionsButton) {
+            loadCompanions();         
+        }
+        if (e.getSource() == gui.addCompanionButton) {
+            if (gui.companionsList.getSelectedIndex() != -1) {
+                companionsAddModel.addElement(companionsModel.getElementAt(gui.companionsList.getSelectedIndex()));
+                companionsModel.removeElementAt(gui.companionsList.getSelectedIndex());
+            }
+
+        }
         if (e.getSource() == gui.addResidencieButton) {
             if (!gui.residenciesTextArea.getText().equals("")) {
                 modelResidencies.addElement(gui.residenciesTextArea.getText());
@@ -105,6 +121,13 @@ public class CtrlGUIAddSuspect implements ActionListener {
 
     }
 
+    private void loadCompanions() {
+        List<Suspect> s = suspectDao.getSuspects();
+        for (int i = 0; i < s.size(); i++) {
+            companionsModel.addElement(s.get(i));
+        }
+    }
+
     private void saveSuspect() {
         Suspect s = new Suspect(gui.nameTextField.getText(), gui.surname1TextField.getText(),
                 gui.surname2TextField.getText(), gui.dniTextField.getText(),
@@ -137,12 +160,19 @@ public class CtrlGUIAddSuspect implements ActionListener {
             }
             s.setResidencies(r);
         }
+        if (gui.companionsAddList.getModel().getSize() > 0) {
+            List<Suspect> c = new ArrayList<>();
+            for (int i = 0; i < gui.companionsAddList.getModel().getSize(); i++) {
+                c.add((Suspect) companionsAddModel.getElementAt(i));
+            }
+            s.setCompanions(c);
+        }
         suspectDao.insert(s);
         clean();
         gui.setVisible(false);
     }
-    
-    private void clean(){
+
+    private void clean() {
         gui.nameTextField.setText(null);
         gui.surname1TextField.setText(null);
         gui.surname2TextField.setText(null);

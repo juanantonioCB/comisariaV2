@@ -39,6 +39,7 @@ public class SuspectDAO {
                 + "OR surname1 LIKE '%" + s + "%' "
                 + "OR surname2 LIKE '%" + s + "%'"
                 + "OR dni LIKE '" + s + "'").getResultList();
+        
         manager.getTransaction().commit();
         manager.close();
         return suspects;

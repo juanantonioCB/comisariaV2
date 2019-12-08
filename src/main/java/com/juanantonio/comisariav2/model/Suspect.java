@@ -6,9 +6,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,14 +42,20 @@ public class Suspect implements Serializable {
     private String records;
     @Column(name = "facts")
     private String facts;
-    @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Residencie> residencies = new ArrayList<>();
-    @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PhoneNumber> phoneNumbers = new ArrayList<>();
-    @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LicensePlate> licensePlates = new ArrayList<>();
-    @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Email> emails = new ArrayList<>();
+
+    @JoinTable(name = "COMPANIONS", joinColumns = {
+        @JoinColumn(name = "idSuspect1", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
+        @JoinColumn(name = "idSuspect2", referencedColumnName = "id", nullable = false)})
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Suspect> companions = new ArrayList<>();
 
     public Suspect() {
 
@@ -59,7 +70,7 @@ public class Suspect implements Serializable {
         this.records = records;
         this.facts = facts;
     }
-    
+
     public Suspect(String name, String surname1, String surname2, String dni, String records, String facts) {
         this.name = name;
         this.surname1 = surname1;
@@ -68,9 +79,6 @@ public class Suspect implements Serializable {
         this.records = records;
         this.facts = facts;
     }
-
-
-
 
     public long getId() {
         return id;
@@ -130,10 +138,8 @@ public class Suspect implements Serializable {
 
     @Override
     public String toString() {
-        return "Suspect{" + "id=" + getId() + ", name=" + getName() + ", surname1=" + getSurname1() + ", surname2=" + getSurname2() + ", dni=" + getDni() + ", records=" + getRecords() + ", facts=" + getFacts() + ", residencies=" ;
+        return name + " " + surname1 + " " + surname2;
     }
-
- 
 
     public void setId(Long id) {
         this.id = id;
@@ -177,5 +183,13 @@ public class Suspect implements Serializable {
 
     public void setEmails(List<Email> emails) {
         this.emails = emails;
+    }
+
+    public List<Suspect> getCompanions() {
+        return companions;
+    }
+
+    public void setCompanions(List<Suspect> companions) {
+        this.companions = companions;
     }
 }
