@@ -7,13 +7,17 @@
     <persistence-unit name="Persistencia">
         <class>com.juanantonio.comisariav2.model.Suspect</class>
         <class>com.juanantonio.comisariav2.model.Residencie</class>
+        <class>com.juanantonio.comisariav2.model.Email</class>
+        <class>com.juanantonio.comisariav2.model.LicensePlate</class>
+        <class>com.juanantonio.comisariav2.model.PhoneNumber</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/Desktop/comisaria" />
             <property name="javax.persistence.jdbc.user" value="sa" />
             <property name="javax.persistence.jdbc.password" value="" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-            <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
         </properties>
     </persistence-unit>
 

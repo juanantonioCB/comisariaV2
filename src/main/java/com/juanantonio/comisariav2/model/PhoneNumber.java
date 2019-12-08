@@ -60,4 +60,8 @@ public class PhoneNumber implements Serializable {
     public void setSuspect(Suspect suspect) {
         this.suspect = suspect;
     }
+    @Override
+    public String toString(){
+        return phoneNumber;
+    }
 }

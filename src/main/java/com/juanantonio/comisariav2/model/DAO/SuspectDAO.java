@@ -28,6 +28,7 @@ public class SuspectDAO {
         Suspect s = manager.find(Suspect.class, id);
         manager.remove(s);
         manager.getTransaction().commit();
+
         manager.close();
     }
 
@@ -39,10 +40,20 @@ public class SuspectDAO {
                 + "OR surname1 LIKE '%" + s + "%' "
                 + "OR surname2 LIKE '%" + s + "%'"
                 + "OR dni LIKE '" + s + "'").getResultList();
-        
+
         manager.getTransaction().commit();
         manager.close();
         return suspects;
+    }
+
+    public Suspect getOneSuspect(Long id) {
+        Suspect s = null;
+        EntityManager manager = emf.createEntityManager();
+        manager.getTransaction().begin();
+        s = manager.find(Suspect.class, id);
+        manager.getTransaction().commit();
+        manager.close();
+        return s;
     }
 
     public List<Suspect> getSuspects() {

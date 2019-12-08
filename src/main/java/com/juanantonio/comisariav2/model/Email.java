@@ -61,4 +61,9 @@ public class Email implements Serializable {
         this.suspect = suspect;
     }
 
+    @Override
+    public String toString() {
+        return email;
+    }
+
 }

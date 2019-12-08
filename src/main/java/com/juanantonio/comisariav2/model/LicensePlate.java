@@ -61,4 +61,9 @@ public class LicensePlate implements Serializable {
     public void setSuspect(Suspect suspect) {
         this.suspect = suspect;
     }
+    
+    @Override
+    public String toString(){
+        return licensePlate;
+    }
 }

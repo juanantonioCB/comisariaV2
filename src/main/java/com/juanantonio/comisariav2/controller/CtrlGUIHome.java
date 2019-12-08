@@ -3,11 +3,15 @@ package com.juanantonio.comisariav2.controller;
 import com.juanantonio.comisariav2.model.DAO.SuspectDAO;
 import com.juanantonio.comisariav2.model.Suspect;
 import com.juanantonio.comisariav2.view.GUIAddSuspect;
+import com.juanantonio.comisariav2.view.GUIEditSuspect;
 import com.juanantonio.comisariav2.view.GUIHome;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,6 +34,18 @@ public class CtrlGUIHome implements ActionListener {
         gui.searchTextField.addActionListener(this);
         gui.test.addActionListener(this);
         gui.test2.addActionListener(this);
+        gui.tableSuspects.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent mouseEvent) {
+                JTable table = (JTable) mouseEvent.getSource();
+                Point point = mouseEvent.getPoint();
+                int row = table.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+                    Long id = (Long) gui.tableSuspects.getValueAt(gui.tableSuspects.getSelectedRow(), 0);
+                    GUIEditSuspect guiEdit= new GUIEditSuspect(id);
+                    guiEdit.setVisible(true);
+                }
+            }
+        });
         suspectDao = new SuspectDAO();
         loadTable();
     }
@@ -37,14 +53,14 @@ public class CtrlGUIHome implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == gui.test) {
-            
+
             System.out.println(suspectDao.getSuspects().get(1).getCompanions());
         }
-        if(e.getSource()==gui.test2){
-            System.out.println("antes "+suspectDao.getSuspects().get(1).getCompanions());
+        if (e.getSource() == gui.test2) {
+            System.out.println("antes " + suspectDao.getSuspects().get(1).getCompanions());
             suspectDao.getSuspects().get(1).getCompanions().remove(0);
-            System.out.println("despues "+suspectDao.getSuspects().get(1).getCompanions());
-           
+            System.out.println("despues " + suspectDao.getSuspects().get(1).getCompanions());
+
         }
         if (e.getSource() == gui.searchTextField) {
             loadTableSearch(gui.searchTextField.getText());

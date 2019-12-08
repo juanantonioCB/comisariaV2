@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -49,6 +50,7 @@ public class Suspect implements Serializable {
     @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LicensePlate> licensePlates = new ArrayList<>();
     @OneToMany(mappedBy = "suspect", cascade = CascadeType.ALL, orphanRemoval = true)
+    
     private List<Email> emails = new ArrayList<>();
 
     @JoinTable(name = "COMPANIONS", joinColumns = {

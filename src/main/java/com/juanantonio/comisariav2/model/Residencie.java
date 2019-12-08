@@ -62,7 +62,7 @@ public class Residencie implements Serializable {
 
     @Override
     public String toString() {
-        return "Residencie{" + "id=" + id + ", residencie=" + residencie;
+        return residencie;
     }
 
     public void setResidencie(String residencie) {
