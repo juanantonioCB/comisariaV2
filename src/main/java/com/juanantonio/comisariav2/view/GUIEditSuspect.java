@@ -22,7 +22,7 @@ public class GUIEditSuspect extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Editar Sospechoso");
         CtrlGUIEditSuspect controller = new CtrlGUIEditSuspect(this, id);
-        System.out.println(id);
+        this.setResizable(false);
     }
 
     /**
@@ -97,7 +97,7 @@ public class GUIEditSuspect extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         title = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Nombre");

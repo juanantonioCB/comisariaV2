@@ -14,6 +14,9 @@ import com.juanantonio.comisariav2.model.Suspect;
 import com.juanantonio.comisariav2.view.GUIEditSuspect;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.DefaultListModel;
 
 /**
@@ -86,7 +89,7 @@ public class CtrlGUIEditSuspect implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == gui.reloadCompanionsButton) {
-            //loadCompanions();            
+            loadCompanions();            
         }
         if (e.getSource() == gui.removeCompanionsButton) {
             if (gui.companionsAddList.getSelectedIndex() != -1) {
@@ -154,8 +157,59 @@ public class CtrlGUIEditSuspect implements ActionListener {
         }
 
         if (e.getSource() == gui.saveSuspectButton) {
-
+            editSuspect();
         }
+    }
+    
+    private void loadCompanions() {
+        List<Suspect> s = suspectDao.getSuspects();
+        for (int i = 0; i < s.size(); i++) {
+            companionsModel.addElement(s.get(i));
+        }
+    }
+
+    private void editSuspect() {
+        Suspect s = new Suspect(gui.nameTextField.getText(), gui.surname1TextField.getText(),
+                gui.surname2TextField.getText(), gui.dniTextField.getText(),
+                gui.recordsTextArea.getText(), gui.factsTextArea.getText());
+        if (modelPhoneNumbers.size() > 0) {
+            List<PhoneNumber> p = new ArrayList<>();
+            for (int i = 0; i < modelPhoneNumbers.size(); i++) {
+                p.add(new PhoneNumber(modelPhoneNumbers.getElementAt(i).toString(), s));
+            }
+            s.setPhoneNumbers(p);
+        }
+        if (modelEmails.size() > 0) {
+            List<Email> e = new ArrayList<>();
+            for (int i = 0; i < modelEmails.size(); i++) {
+                e.add(new Email(modelEmails.getElementAt(i).toString(), s));
+            }
+            s.setEmails(e);
+        }
+        if (modelLicensePlates.size() > 0) {
+            List<LicensePlate> l = new ArrayList<>();
+            for (int i = 0; i < modelLicensePlates.size(); i++) {
+                l.add(new LicensePlate(modelLicensePlates.getElementAt(i).toString(), s));
+            }
+            s.setLicensePlates(l);
+        }
+        if (modelResidencies.size() > 0) {
+            List<Residencie> r = new ArrayList<>();
+            for (int i = 0; i < modelResidencies.size(); i++) {
+                r.add(new Residencie(modelResidencies.getElementAt(i).toString(), s));
+            }
+            s.setResidencies(r);
+        }
+        if (companionsAddModel.size() > 0) {
+            List<Suspect> c = new ArrayList<>();
+            for (int i = 0; i < gui.companionsAddList.getModel().getSize(); i++) {
+                c.add((Suspect) companionsAddModel.getElementAt(i));
+            }
+            s.setCompanions(c);
+        }
+        s.setId(id);
+        suspectDao.updateSuspect(s);
+        gui.setVisible(false);
     }
 
 }

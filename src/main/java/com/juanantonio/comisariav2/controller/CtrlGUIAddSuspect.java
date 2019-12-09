@@ -31,6 +31,7 @@ public class CtrlGUIAddSuspect implements ActionListener {
     public CtrlGUIAddSuspect(GUIAddSuspect gui) {
         this.gui = gui;
         suspectDao = new SuspectDAO();
+        loadCompanions();
         gui.addEmailButton.addActionListener(this);
         gui.addLicensePlateButton.addActionListener(this);
         gui.addPhoneNumberButton.addActionListener(this);

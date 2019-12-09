@@ -31,6 +31,15 @@ public class SuspectDAO {
 
         manager.close();
     }
+    
+    public void updateSuspect(Suspect s) {
+        EntityManager manager = emf.createEntityManager();
+        manager.getTransaction().begin();
+        manager.merge(s);
+        manager.getTransaction().commit();
+
+        manager.close();
+    }
 
     public List<Suspect> getSearchSuspects(String s) {
         List<Suspect> suspects = null;
